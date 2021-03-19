@@ -17,6 +17,7 @@
 
 .item.active {
     background-color: purple;
+outline: 1px solid white;
 }
 
 #startGame {
