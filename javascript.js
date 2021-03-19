@@ -115,15 +115,23 @@ function getElementByCoord(c) {
 
 function moveDown() {
     undraw()
-    currentCoord += columnCount
-    draw()
-    freeze()
-    addScore()
-    gameOver()
+    if (currentBlock.some(index => items[currentCoord + index + columnCount].classList.contains("taken"))) {
+        draw()
+        freeze()
+        gameOver()
+    } else {
+        currentCoord += columnCount
+        draw()
+        addScore()
+            // gameOver()
+    }
+
 }
 
 
+
 function moveRight() {
+    // debugger
     undraw();
     let rightSide = currentBlock.some(index => (currentCoord + index) % columnCount === columnCount - 1)
     if (!rightSide) currentCoord += 1
@@ -134,6 +142,7 @@ function moveRight() {
 }
 
 function moveLeft() {
+    // debugger
     undraw();
     let leftSide = currentBlock.some(index => (currentCoord + index) % columnCount === 0)
     if (!leftSide) currentCoord -= 1
@@ -195,9 +204,9 @@ let t = new Blocks([
 // t.paint()
 let i = new Blocks([
         [0, columnCount, columnCount * 2, columnCount * 3],
-        [0, 1, 2, 3],
+        [3, 2, 1, 0],
         [0, columnCount, columnCount * 2, columnCount * 3],
-        [0, 1, 2, 3]
+        [3, 2, 1, 0]
     ])
     // i.paint()
 let j = new Blocks([
@@ -248,7 +257,6 @@ function freeze() {
 }
 
 
-
 function rotate() {
     undraw();
     currentPosition++
@@ -260,9 +268,21 @@ function rotate() {
     }
     currentBlock = arrOfElements[random].coords[currentPosition]
     draw()
-
-
 }
+// function rotate() {
+//     undraw();
+//     currentPosition++
+//     if (currentPosition === currentBlock.length) {
+//         currentPosition = 0
+//     }
+//     for (let i = 0; i < currentBlock.length; i++) {
+//         if ((currentCoord + currentBlock[i]) % 10 >= columnCount - 1) {
+//             currentCoord -= 1
+//         }
+//     }
+//     currentBlock = arrOfElements[random].coords[currentPosition]
+//     draw()
+// }
 
 function taken() {
     for (let i = allCubesCount; i < allCubesCount + 10; i++) {
